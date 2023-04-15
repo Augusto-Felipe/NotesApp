@@ -143,7 +143,7 @@ class LoginScreen: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        self.configEnableButton(enable: false)
+        self.configEnableButton(enable: true)
         addElements()
         configLogoImageViewConstraints()
         configAppNameLabelConstraints()

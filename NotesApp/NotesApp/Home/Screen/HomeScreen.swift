@@ -65,7 +65,10 @@ class HomeScreen: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addElements()
-        setupConstraints()
+        configTopViewConstraints()
+        configTableViewContraints()
+        configAddTaskButtonConstraints()
+        configAddTaskLabelConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -79,28 +82,37 @@ class HomeScreen: UIView {
         addSubview(addTaskLabel)
     }
     
-    private func setupConstraints() {
-        
-        NSLayoutConstraint.activate([
-            
-            topView.topAnchor.constraint(equalTo: self.topAnchor),
-            topView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            topView.heightAnchor.constraint(equalToConstant: 200),
-            
-            tableView.topAnchor.constraint(equalTo: topView.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            addTaskButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 50),
-            addTaskButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
-            addTaskButton.heightAnchor.constraint(equalToConstant: 50),
-            addTaskButton.widthAnchor.constraint(equalToConstant: 50),
-            
-            addTaskLabel.trailingAnchor.constraint(equalTo: self.addTaskButton.leadingAnchor, constant: -10),
-            addTaskLabel.centerYAnchor.constraint(equalTo: self.addTaskButton.centerYAnchor),
-        ])
+    private func configTopViewConstraints() {
+        self.topView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(200)
+        }
     }
     
+    private func configTableViewContraints() {
+        self.tableView.snp.makeConstraints { make in
+            make.top.equalTo(topView.snp.bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func configAddTaskButtonConstraints() {
+        self.addTaskButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(50)
+            make.leading.equalToSuperview().inset(40)
+            make.height.equalTo(50)
+            make.width.equalTo(50)
+        }
+    }
+    
+    private func configAddTaskLabelConstraints() {
+        self.addTaskLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(addTaskButton.snp.leading).inset(230)
+            make.centerY.equalTo(addTaskButton.snp.centerY)
+        }
+    }
 }
