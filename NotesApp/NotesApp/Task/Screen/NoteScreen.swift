@@ -68,7 +68,9 @@ class NoteScreen: UIView {
         super.init(frame: frame)
         backgroundColor = .appGreenColor
         self.addElements()
-        self.setupContraints()
+        self.configBackButtonConstraints()
+        self.configAddNoteTextFieldConstraints()
+        self.configSaveNoteButtonConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -81,24 +83,31 @@ class NoteScreen: UIView {
         addSubview(backButton)
     }
     
-    private func setupContraints() {
-        
-        NSLayoutConstraint.activate([
-            
-            self.backButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10),
-            self.backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            self.backButton.heightAnchor.constraint(equalToConstant: 40),
-            self.backButton.widthAnchor.constraint(equalToConstant: 40),
-        
-            self.addNoteTextField.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 80),
-            self.addNoteTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
-            self.addNoteTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
-            self.addNoteTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            self.saveNoteButton.topAnchor.constraint(equalTo: self.addNoteTextField.bottomAnchor, constant: 20),
-            self.saveNoteButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50),
-            self.saveNoteButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -50),
-            self.saveNoteButton.heightAnchor.constraint(equalToConstant: 40),
-        ])
+    private func configBackButtonConstraints() {
+        self.backButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
+            make.leading.equalToSuperview().offset(20)
+            make.height.equalTo(40)
+            make.width.equalTo(40)
+        }
     }
+    
+    private func configAddNoteTextFieldConstraints() {
+        self.addNoteTextField.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(80)
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().inset(25)
+            make.height.equalTo(50)
+        }
+    }
+    
+    private func configSaveNoteButtonConstraints() {
+        self.saveNoteButton.snp.makeConstraints { make in
+            make.top.equalTo(addNoteTextField.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(50)
+            make.trailing.equalToSuperview().inset(50)
+            make.height.equalTo(40)
+        }
+    }
+    
 }
