@@ -20,6 +20,11 @@ class LoginScreen: UIView {
         self.delegate = delegate
     }
     
+    public func configTextFieldDelegate(delegate: UITextFieldDelegate) {
+        self.emailTextField.delegate = delegate
+        self.passwordTextField.delegate = delegate
+    }
+    
     lazy var logoAppImageView: UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
@@ -96,6 +101,7 @@ class LoginScreen: UIView {
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = .appGreenColor
         btn.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        btn.isEnabled = false
         return btn
     }()
     
@@ -116,9 +122,28 @@ class LoginScreen: UIView {
         self.delegate?.actionRegisterButton()
     }
     
+    public func validateTextFields() {
+        if emailTextField.hasText && passwordTextField.hasText {
+            configEnableButton(enable: true)
+        } else {
+            configEnableButton(enable: false)
+        }
+    }
+    
+    public func configEnableButton(enable: Bool) {
+        if enable == true {
+            self.loginButton.setTitleColor(.white, for: .normal)
+            self.loginButton.isEnabled = true
+        } else {
+            self.loginButton.setTitleColor(.lightGray, for: .normal)
+            self.loginButton.isEnabled = false
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        self.configEnableButton(enable: false)
         addElements()
         setupContraints()
     }

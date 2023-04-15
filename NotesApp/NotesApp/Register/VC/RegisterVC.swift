@@ -29,19 +29,33 @@ extension RegisterVC: RegisterScreenProtocol {
         navigationController?.popViewController(animated: true)
     }
     
+    func actionRegisterButton() {
+        print(#function)
+    }
 }
 
 extension RegisterVC: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-
+        textField.layer.borderColor  = UIColor.blue.cgColor
+        textField.layer.borderWidth = 2
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
+        if !textField.hasText {
+            textField.layer.borderColor  = UIColor.red.cgColor
+            textField.layer.borderWidth = 2
+        } else {
+            textField.layer.borderColor  = UIColor.lightGray.cgColor
+            textField.layer.borderWidth = 2
+        }
+        
+        self.registerScreen?.validateTextFields()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
 }

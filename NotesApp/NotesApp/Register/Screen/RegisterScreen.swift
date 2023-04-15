@@ -9,6 +9,7 @@ import UIKit
 
 protocol RegisterScreenProtocol: AnyObject {
     func actionBackButton()
+    func actionRegisterButton()
 }
 
 class RegisterScreen: UIView {
@@ -110,6 +111,7 @@ class RegisterScreen: UIView {
         btn.backgroundColor = UIColor(red: 96/255, green: 153/255, blue: 102/255, alpha: 1.0)
         btn.clipsToBounds = true
         btn.layer.cornerRadius = 16
+        btn.addTarget(self, action: #selector(registerButtonPressed), for: .touchUpInside)
         return btn
     }()
     
@@ -117,15 +119,52 @@ class RegisterScreen: UIView {
         self.delegate?.actionBackButton()
     }
     
+    @objc private func registerButtonPressed() {
+        self.delegate?.actionRegisterButton()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .appGreenColor
+        configInitialRegisterButtonState()
         addElements()
         setupContraints()
     }
     
+    public func configInitialRegisterButtonState() {
+        self.registerButton.isEnabled = false
+        self.registerButton.setTitleColor(.lightGray, for: .normal)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func validateTextFields() {
+        
+        if self.nameTextField.hasText && self.emailTextField.hasText && self.passwordTextField.hasText && self.confirmPasswordTextField.hasText {
+            
+            if self.passwordTextField.text == self.confirmPasswordTextField.text {
+                configButtonEnable(enable: true)
+            } else {
+                configButtonEnable(enable: false)
+            }
+        } else {
+            registerButton.isEnabled = false
+            registerButton.setTitleColor(.lightGray, for: .normal)
+        }
+    }
+    
+    public func configButtonEnable(enable: Bool) {
+        
+        if enable == true {
+            registerButton.isEnabled = true
+            registerButton.setTitleColor(.white, for: .normal)
+        } else {
+            registerButton.isEnabled = false
+            passwordTextField.layer.borderColor = UIColor(red: 226/255, green: 24/255, blue: 24/255, alpha: 1.0).cgColor
+            confirmPasswordTextField.layer.borderColor = UIColor(red: 226/255, green: 24/255, blue: 24/255, alpha: 1.0).cgColor
+        }
     }
     
     private func addElements() {
