@@ -9,6 +9,7 @@ import UIKit
 
 protocol HomeScreenProtocol: AnyObject {
     func actionAddTaskButtonPressed()
+    func actionLogoutButtonPressed()
 }
 
 class HomeScreen: UIView {
@@ -63,6 +64,15 @@ class HomeScreen: UIView {
         return lb
     }()
     
+    lazy var logoutButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setBackgroundImage(UIImage(systemName: "iphone.and.arrow.forward"), for: .normal)
+        btn.tintColor = .white
+        btn.addTarget(self, action: #selector(logoutButtonPressed), for: .touchUpInside)
+        return btn
+    }()
+    
     public func configTableViewDelegate(delegate: UITableViewDelegate, datasource: UITableViewDataSource) {
         tableView.delegate = delegate
         tableView.dataSource = datasource
@@ -70,6 +80,10 @@ class HomeScreen: UIView {
     
    @objc private func addTaskButtonPressed() {
        self.delegate?.actionAddTaskButtonPressed()
+    }
+    
+    @objc private func logoutButtonPressed() {
+        self.delegate?.actionLogoutButtonPressed()
     }
 
     override init(frame: CGRect) {
@@ -80,6 +94,7 @@ class HomeScreen: UIView {
         configAddTaskButtonConstraints()
         configAddTaskLabelConstraints()
         configGreetingLabelConstraints()
+        configLogoutButtonConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -92,6 +107,7 @@ class HomeScreen: UIView {
         addSubview(addTaskButton)
         addSubview(addTaskLabel)
         addSubview(greetingLabel)
+        addSubview(logoutButton)
     }
     
     private func configTopViewConstraints() {
@@ -132,6 +148,15 @@ class HomeScreen: UIView {
         self.greetingLabel.snp.makeConstraints { make in
             make.leading.equalTo(addTaskButton.snp.leading)
             make.top.equalToSuperview().offset(60)
+        }
+    }
+    
+    private func configLogoutButtonConstraints() {
+        self.logoutButton.snp.makeConstraints { make in
+            make.centerY.equalTo(addTaskLabel.snp.centerY)
+            make.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(40)
+            make.width.equalTo(40)
         }
     }
 }

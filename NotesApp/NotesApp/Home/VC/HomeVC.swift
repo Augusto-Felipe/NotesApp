@@ -58,7 +58,19 @@ extension HomeVC: HomeScreenProtocol {
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-
+    
+    
+    func actionLogoutButtonPressed() {
+        
+        do {
+            try self.auth?.signOut()
+            if self.auth?.currentUser == nil {
+                self.navigationController?.popViewController(animated: true)
+            }
+        } catch let signOutError as NSError {
+            print("Erro ao tentar deslogar o usuário: ", signOutError)
+        }
+    }
 }
 
 extension HomeVC: UITableViewDelegate, UITableViewDataSource {

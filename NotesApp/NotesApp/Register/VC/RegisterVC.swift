@@ -61,7 +61,6 @@ extension RegisterVC: RegisterScreenProtocol {
             }
         })
         
-        
     }
 }
 
