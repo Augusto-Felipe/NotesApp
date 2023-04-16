@@ -45,11 +45,23 @@ extension RegisterVC: RegisterScreenProtocol {
             if error != nil {
                 self.alert?.createAlert(title: "Erro!", message: "Verifique as informações digitadas.")
             } else {
+                guard let user = result?.user else { return }
+                let changeRequest = user.createProfileChangeRequest()
+                changeRequest.displayName = self.registerScreen?.nameTextField.text ?? ""
+                changeRequest.commitChanges { error in
+                    if let error = error {
+                        print("Erro ao atualizar o nome do usuário: \(error.localizedDescription)")
+                    } else {
+                        print("Nome do usuário atualizado com sucesso.")
+                    }
+                }
                 self.alert?.createAlert(title: "Parabéns", message: "Usuário cadastrado com sucesso.", completion: {
                     self.navigationController?.popViewController(animated: true)
                 })
             }
         })
+        
+        
     }
 }
 

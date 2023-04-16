@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeVC: UIViewController {
     
@@ -14,6 +15,8 @@ class HomeVC: UIViewController {
     var noteUserDefatuls: NoteUserDefaults = NoteUserDefaults()
     
     var noteList: [String] = []
+    
+    var auth: Auth?
 
     override func loadView() {
         self.homeScreen = HomeScreen()
@@ -27,6 +30,8 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.auth = Auth.auth()
+        self.homeScreen?.greetingLabel.text = "Olá, \(auth?.currentUser?.displayName ?? "")"
         self.homeScreen?.delegate(delegate: self)
         self.homeScreen?.configTableViewDelegate(delegate: self, datasource: self)
     }
@@ -35,6 +40,7 @@ class HomeVC: UIViewController {
         noteList = noteUserDefatuls.listNotes()
         self.homeScreen?.tableView.reloadData()
     }
+    
 
 }
 

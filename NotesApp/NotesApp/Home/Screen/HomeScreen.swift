@@ -19,6 +19,16 @@ class HomeScreen: UIView {
         self.delegate = delegate
     }
     
+    lazy var greetingLabel: UILabel = {
+        let lb = UILabel()
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        lb.textColor = .white
+        lb.font = UIFont(name: "ChalkboardSE-Bold", size: 17)
+        lb.text = "Olá, Fulano"
+        lb.textAlignment = .center
+        return lb
+    }()
+    
     lazy var topView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -69,6 +79,7 @@ class HomeScreen: UIView {
         configTableViewContraints()
         configAddTaskButtonConstraints()
         configAddTaskLabelConstraints()
+        configGreetingLabelConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -80,6 +91,7 @@ class HomeScreen: UIView {
         addSubview(tableView)
         addSubview(addTaskButton)
         addSubview(addTaskLabel)
+        addSubview(greetingLabel)
     }
     
     private func configTopViewConstraints() {
@@ -113,6 +125,13 @@ class HomeScreen: UIView {
         self.addTaskLabel.snp.makeConstraints { make in
             make.trailing.equalTo(addTaskButton.snp.leading).inset(230)
             make.centerY.equalTo(addTaskButton.snp.centerY)
+        }
+    }
+    
+    private func configGreetingLabelConstraints() {
+        self.greetingLabel.snp.makeConstraints { make in
+            make.leading.equalTo(addTaskButton.snp.leading)
+            make.top.equalToSuperview().offset(60)
         }
     }
 }
