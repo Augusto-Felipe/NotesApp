@@ -31,9 +31,16 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.auth = Auth.auth()
-        self.homeScreen?.greetingLabel.text = "Olá, \(auth?.currentUser?.displayName ?? "")"
+        self.configGreetingUserName()
         self.homeScreen?.delegate(delegate: self)
         self.homeScreen?.configTableViewDelegate(delegate: self, datasource: self)
+    }
+    
+    public func configGreetingUserName() {
+        if let userName = self.auth?.currentUser?.displayName {
+            self.homeScreen?.greetingLabel.text = "Olá, \(userName)"
+        }
+        
     }
     
     public func reloadData() {
