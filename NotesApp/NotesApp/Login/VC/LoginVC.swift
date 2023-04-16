@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginVC: UIViewController {
     
     var loginScreen: LoginScreen?
+    
+    var auth: Auth?
+    
+    var alert: Alert?
 
     override func loadView() {
         self.loginScreen = LoginScreen()
@@ -22,6 +27,8 @@ class LoginVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.auth = Auth.auth()
+        self.alert = Alert(controller: self)
         self.loginScreen?.delegate  = self
         self.loginScreen?.configTextFieldDelegate(delegate: self)
     }
@@ -31,8 +38,23 @@ class LoginVC: UIViewController {
 extension LoginVC: LoginScreenProtocol {
     
     func actionLoginButton() {
-        let vc = HomeVC()
-        navigationController?.pushViewController(vc, animated: true)
+        
+        guard let login = self.loginScreen else { return }
+        
+        self.auth?.signIn(withEmail: login.getEmail(), password: login.getPassword() , completion: { result, error in
+            
+            if error != nil {
+                self.alert?.createAlert(title: "Dados Incorretos", message: "Verifique as informações")
+            } else if result == nil {
+                self.alert?.createAlert(title: "Tivemos um problema inesperado.", message: "Tente novamente mais tarde.")
+            } else {
+                self.alert?.createAlert(title: "Logado com sucesso", message: "Vamos lá o/", completion: {
+                    let vc = HomeVC()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                })
+                
+            }
+        })
     }
     
     func actionRegisterButton() {
@@ -52,7 +74,7 @@ extension LoginVC: UITextFieldDelegate {
         
         if !textField.hasText {
             textField.layer.borderWidth = 2
-            textField.layer.borderColor = UIColor.red.cgColor
+            textField.layer.borderColor = UIColor.appRedColor.cgColor
         } else {
             textField.layer.borderWidth = 2
             textField.layer.borderColor = UIColor.lightGray.cgColor

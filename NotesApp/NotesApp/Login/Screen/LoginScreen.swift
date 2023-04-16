@@ -170,6 +170,14 @@ class LoginScreen: UIView {
         addSubview(registerButton)
     }
     
+    public func getEmail() -> String {
+        return emailTextField.text ?? ""
+    }
+    
+    public func getPassword() -> String {
+        return passwordTextField.text ?? ""
+    }
+    
     private func configLogoImageViewConstraints() {
         self.logoAppImageView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(50)

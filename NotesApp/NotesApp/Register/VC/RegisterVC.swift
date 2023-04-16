@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import Firebase
 
 class RegisterVC: UIViewController {
     
     var registerScreen: RegisterScreen?
+    
+    var auth: Auth?
+    
+    var alert: Alert?
     
     override func loadView() {
         self.registerScreen = RegisterScreen()
@@ -18,8 +23,10 @@ class RegisterVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.alert = Alert(controller: self)
         self.registerScreen?.delegate(delegate: self)
         self.registerScreen?.configTextFieldDelegate(delegate: self)
+        self.auth = Auth.auth()
     }
 
 }
@@ -30,7 +37,19 @@ extension RegisterVC: RegisterScreenProtocol {
     }
     
     func actionRegisterButton() {
-        print(#function)
+        
+        guard let email: String = self.registerScreen?.getEmail() else { return }
+        guard let password: String = self.registerScreen?.getPassword() else { return }
+        
+        self.auth?.createUser(withEmail: email, password: password, completion: { result, error in
+            if error != nil {
+                self.alert?.createAlert(title: "Erro!", message: "Verifique as informações digitadas.")
+            } else {
+                self.alert?.createAlert(title: "Parabéns", message: "Usuário cadastrado com sucesso.", completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }
+        })
     }
 }
 
@@ -44,7 +63,7 @@ extension RegisterVC: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         if !textField.hasText {
-            textField.layer.borderColor  = UIColor.red.cgColor
+            textField.layer.borderColor  = UIColor.appRedColor.cgColor
             textField.layer.borderWidth = 2
         } else {
             textField.layer.borderColor  = UIColor.lightGray.cgColor

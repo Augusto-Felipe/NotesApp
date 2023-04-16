@@ -15,7 +15,7 @@ protocol RegisterScreenProtocol: AnyObject {
 class RegisterScreen: UIView {
     
     var delegate: RegisterScreenProtocol?
-    
+
     public func delegate(delegate: RegisterScreenProtocol) {
         self.delegate = delegate
     }
@@ -146,6 +146,11 @@ class RegisterScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func validadeRegisterButtonPressed() {
+        
+    }
+    
+    
     public func validateTextFields() {
         
         if self.nameTextField.hasText && self.emailTextField.hasText && self.passwordTextField.hasText && self.confirmPasswordTextField.hasText {
@@ -161,6 +166,7 @@ class RegisterScreen: UIView {
         }
     }
     
+    
     public func configButtonEnable(enable: Bool) {
         
         if enable == true {
@@ -168,9 +174,17 @@ class RegisterScreen: UIView {
             registerButton.setTitleColor(.white, for: .normal)
         } else {
             registerButton.isEnabled = false
-            passwordTextField.layer.borderColor = UIColor(red: 226/255, green: 24/255, blue: 24/255, alpha: 1.0).cgColor
-            confirmPasswordTextField.layer.borderColor = UIColor(red: 226/255, green: 24/255, blue: 24/255, alpha: 1.0).cgColor
+            passwordTextField.layer.borderColor = UIColor.appRedColor.cgColor
+            confirmPasswordTextField.layer.borderColor = UIColor.appRedColor.cgColor
         }
+    }
+    
+    public func getEmail() -> String {
+        return emailTextField.text ?? ""
+    }
+    
+    public func getPassword() -> String {
+        return passwordTextField.text ?? ""
     }
     
     private func addElements() {
