@@ -25,7 +25,7 @@ class LoginVC: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
 
-    override func viewDidLoad() {
+    override func viewDidLoad() {   
         super.viewDidLoad()
         self.auth = Auth.auth()
         self.alert = Alert(controller: self)
