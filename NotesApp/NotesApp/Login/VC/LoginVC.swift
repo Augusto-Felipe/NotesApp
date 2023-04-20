@@ -23,6 +23,7 @@ class LoginVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
+        self.loginScreen?.passwordTextField.text = ""
     }
 
     override func viewDidLoad() {   
