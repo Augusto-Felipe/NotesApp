@@ -2,7 +2,7 @@
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/devsuperior/sds1-wmazoni/blob/master/LICENSE) 
 
 # Sobre o projeto
-O Note App é um aplicativo é para pessoas que desejam ter todas as suas notas em um só lugar, e de forma simples, o usuário pode criar e excluir notas.
+O Aplicativo de Notas é uma ferramenta simples e eficaz para manter suas notas organizadas e acessíveis a qualquer momento. Com este aplicativo, os usuários podem criar e excluir notas de forma fácil e rápida, garantindo que todas as suas informações importantes estejam ao alcance.
 
 ## Layout
 <p align="center">
@@ -14,6 +14,13 @@ O Note App é um aplicativo é para pessoas que desejam ter todas as suas notas 
   <img src="https://user-images.githubusercontent.com/107811979/235204892-409d7745-3cd3-4cfe-b94e-47db506036f0.png" width="300" />
   <img src="https://user-images.githubusercontent.com/107811979/235204962-8c5ade84-a709-4055-88e6-96d633615c65.png" width="300" />
 </p>
+
+# Principais recursos
+- Adicionar Notas: Os usuários podem criar novas notas com títulos e conteúdo, permitindo que registrem informações importantes.
+
+- Excluir Notas: Os usuários têm a capacidade de excluir notas que não são mais necessárias.
+
+- Lista de Notas: Todas as notas são exibidas em uma lista para fácil acesso e gerenciamento.
 
 # Tecnologias utilizadas
 - UIKit
